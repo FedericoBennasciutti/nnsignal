@@ -93,9 +93,11 @@ def testCNN(model, xTest, yTest, name, plotsetting=None):
 
 
 class CNNOfflineData(object):
-    def __init__(self, window_size, overlap, num_input_signals=8):
+    def __init__(self, window_size, overlap, shuffle ,split, num_input_signals=8):
         self.window_size=window_size
         self.overlap=overlap
+        self.shuffle=shuffle
+        self.split=split
 
 
     def prepareData(self, x, y,  axis=None):
