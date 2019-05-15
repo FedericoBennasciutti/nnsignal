@@ -43,8 +43,8 @@ if mpl:
 
 class CNN(object):
 
-    def __init__(self, model_h5_file_path, seq_len, bias_window_size=10,  num_input_signals=16):
-        self.data = RNNOnlineData(seq_len)
+    def __init__(self, model_h5_file_path, seq_len, bias_window_size=10,  num_input_signals=61):
+        self.data = CNNOnlineData(seq_len)
         self.pred_history = np.zeros(bias_window_size)
         self.bias_window_size = bias_window_size
         self.init_ct = bias_window_size
@@ -92,13 +92,15 @@ def testCNN(model, xTest, yTest, name, plotsetting=None):
 ''' data sequence for training '''
 
 
-class RNNOfflineData(object):
-    def __init__(self, seq_len, normalise=False, number_input_signals=None):
-        pass
+class CNNOfflineData(object):
+    def __init__(self, window_size, overlap, num_input_signals=8):
+        self.window_size=window_size
+        self.overlap=overlap
+
 
     def prepareData(self, x, y,  axis=None):
         pass
-        # return x, y
+        return x, y
 
     def normalise_windows(self, window_data_list):
         pass
@@ -112,7 +114,7 @@ class RNNOfflineData(object):
 ''' data stream for prediction '''
 
 
-class RNNOnlineData(object):
+class CNNOnlineData(object):
 
     def __init__(self, seq_len):
         pass
