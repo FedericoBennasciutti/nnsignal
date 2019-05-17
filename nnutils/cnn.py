@@ -93,16 +93,25 @@ def testCNN(model, xTest, yTest, name, plotsetting=None):
 
 
 class CNNOfflineData(object):
-    def __init__(self, window_size, overlap, shuffle ,split, num_input_signals=8):
-        self.window_size=window_size
+    def __init__(self, seq_len, overlap, normalise=False, number_input_signals=None):
+        self.seq_len = seq_len
         self.overlap=overlap
-        self.shuffle=shuffle
-        self.split=split
+        self.normalise = normalise
+        self.number_input_signals = number_input_signals
 
 
-    def prepareData(self, x, y,  axis=None):
-        pass
-        return x, y
+    def prepareData(self, x, y, axis=None):
+        s=int((1-self.overlap)*self.seq_len)
+        i=0
+        n=0
+        X=list()
+        Y=list()
+        while i+self.seq_len<=len(x):
+            X.append(x[i:(i+self.seq_len)])
+            Y.append(y[i+self.seq_len]) #as output, for each of 6 finger i put the last value of that window
+            i=i+s
+            n=n+1
+        return X, Y
 
     def normalise_windows(self, window_data_list):
         pass
